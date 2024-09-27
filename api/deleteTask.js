@@ -2,7 +2,7 @@ import { tasks } from '../drizzle/schema.js';
 import { authenticateUser } from "./_apiUtils.js"
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 export default async function handler(req, res) {
   if (req.method !== 'DELETE') {
@@ -22,8 +22,8 @@ export default async function handler(req, res) {
     const sql = neon(process.env.NEON_DB_URL);
     const db = drizzle(sql);
 
-    await db.deleteFrom(tasks)
-      .where(eq(tasks.id, id), eq(tasks.userId, user.id));
+    await db.delete(tasks)
+      .where(and(eq(tasks.id, id), eq(tasks.userId, user.id)));
 
     res.status(200).json({ message: 'Task deleted' });
   } catch (error) {

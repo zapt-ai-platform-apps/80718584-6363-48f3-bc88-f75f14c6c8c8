@@ -23,7 +23,7 @@ function App() {
   onMount(checkUserSignedIn);
 
   createEffect(() => {
-    const authListener = supabase.auth.onAuthStateChange((_, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
         setUser(session.user);
         setCurrentPage('homePage');
@@ -34,7 +34,7 @@ function App() {
     });
 
     return () => {
-      authListener.data.subscription.unsubscribe();
+      authListener.subscription.unsubscribe();
     };
   });
 
@@ -157,22 +157,24 @@ function App() {
     const { data: { session } } = await supabase.auth.getSession();
     try {
       const tasksToAdd = selectedSuggestions().map(description => ({ description }));
-      const response = await fetch('/api/saveTask', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ description: tasksToAdd[0].description }),
-      });
-      if (response.ok) {
-        const savedTask = await response.json();
-        setTasks([savedTask, ...tasks()]);
-        setAiSuggestions([]);
-        setSelectedSuggestions([]);
-      } else {
-        console.error('Error saving task');
+      for (let task of tasksToAdd) {
+        const response = await fetch('/api/saveTask', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(task),
+        });
+        if (response.ok) {
+          const savedTask = await response.json();
+          setTasks([savedTask, ...tasks()]);
+        } else {
+          console.error('Error saving task');
+        }
       }
+      setAiSuggestions([]);
+      setSelectedSuggestions([]);
     } catch (error) {
       console.error('Error saving task:', error);
     } finally {
@@ -186,7 +188,7 @@ function App() {
   });
 
   return (
-    <div class="h-full bg-gradient-to-br from-green-100 to-blue-100 p-4 text-gray-800">
+    <div class="min-h-screen bg-gradient-to-br from-green-100 to-blue-100 p-4 text-gray-800">
       <Show
         when={currentPage() === 'homePage'}
         fallback={
@@ -211,7 +213,7 @@ function App() {
           </div>
         }
       >
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto h-full">
           <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-green-600">Smart Todo List</h1>
             <button
@@ -269,7 +271,7 @@ function App() {
                           setSelectedSuggestions(selectedSuggestions().filter(item => item !== suggestion));
                         }
                       }}
-                      class="mr-2"
+                      class="mr-2 cursor-pointer"
                     />
                     <span>{suggestion}</span>
                   </div>
