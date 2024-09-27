@@ -1,11 +1,14 @@
 # Smart Todo List Application with Dark Theme
 
-This application is a smart todo list that helps users manage their tasks efficiently. It provides AI-generated suggestions for new tasks based on your existing tasks. The app now features a dark theme for a better user experience, especially in low-light environments.
+This application is a smart todo list that helps users manage their tasks efficiently. It provides AI-generated suggestions for new tasks based on your existing tasks. The app now occupies the entire screen height, enhancing the user experience by eliminating any whitespace below, especially on desktop devices. It also features a dark theme for better visibility in low-light environments.
 
 ## Features
 
+- **Full-Screen Height:**
+  - The app now takes up the entire screen height, providing a seamless experience without any unnecessary whitespace.
+
 - **Dark Theme:**
-  - The app now supports a dark theme, providing a comfortable viewing experience in low-light conditions.
+  - The app supports a dark theme, offering a comfortable viewing experience in low-light conditions.
 
 - **User Authentication:**
   - Sign in with ZAPT using email or social login providers (Google, Facebook, Apple).
@@ -33,7 +36,7 @@ This application is a smart todo list that helps users manage their tasks effici
 ### 2. View Todo List
 
 1. After signing in, you are redirected to the home page.
-2. View your current list of tasks displayed in the dark theme.
+2. View your current list of tasks displayed in the dark theme and occupying the full screen height.
 
 ### 3. Add a New Task Manually
 

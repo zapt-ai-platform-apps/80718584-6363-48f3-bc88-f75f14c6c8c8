@@ -188,11 +188,11 @@ function App() {
   });
 
   return (
-    <div class="h-full bg-gradient-to-br from-green-100 to-blue-100 dark:from-gray-900 dark:to-gray-800 p-4 text-gray-800 dark:text-gray-200">
+    <div class="h-full flex flex-col bg-gradient-to-br from-green-100 to-blue-100 dark:from-gray-900 dark:to-gray-800 p-4 text-gray-800 dark:text-gray-200">
       <Show
         when={currentPage() === 'homePage'}
         fallback={
-          <div class="flex items-center justify-center h-full">
+          <div class="flex items-center justify-center flex-grow">
             <div class="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
               <h2 class="text-3xl font-bold mb-6 text-center text-green-600 dark:text-green-400">Sign in with ZAPT</h2>
               <a
@@ -213,7 +213,7 @@ function App() {
           </div>
         }
       >
-        <div class="max-w-4xl mx-auto h-full">
+        <div class="flex flex-col flex-grow max-w-4xl mx-auto">
           <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-green-600 dark:text-green-400">Smart Todo List</h1>
             <button
@@ -290,7 +290,7 @@ function App() {
             </div>
           </Show>
 
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex-grow">
             <h2 class="text-2xl font-bold mb-4 text-green-600 dark:text-green-400">Your Tasks</h2>
             <Show when={tasks().length} fallback={<p>No tasks available.</p>}>
               <For each={tasks()}>
